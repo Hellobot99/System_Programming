@@ -1,0 +1,62 @@
+#!/usr/bin/expect -f
+log_user 0
+
+set timeout 5
+set target "hello"
+set executable "./typer"
+set log_file "icanon_test_output.tmp"
+
+# Run the program
+spawn $executable $target
+
+# Wait for the "Start typing:" prompt
+expect "Start typing:"
+
+# Provide user input (could be valid or with typo)
+set input "hello"
+send -- "$input\r"
+
+# Capture full program output
+set output ""
+expect {
+  -re "=== Result ===.*" {
+    append output $expect_out(buffer)
+  }
+  eof {
+    append output $expect_out(buffer)
+  }
+  timeout {
+    puts "FAIL: Timed out waiting for result"
+    exit 1
+  }
+}
+
+# Analyze output lines for duplicates
+set lines [split $output "\n"]
+array set seen {}
+set duplicated 0
+
+foreach line $lines {
+  set trimmed [string trim $line]
+  if {$trimmed eq ""} { continue }
+
+  if {[info exists seen($trimmed)]} {
+    set duplicated 1
+  } else {
+    set seen($trimmed) 1
+  }
+}
+
+# Result
+if {$duplicated} {
+  # puts "FAIL: ICANON may be ON"
+  # Cleanup
+  file delete -force $log_file
+  exit 1
+} else {
+  # puts "PASS: ICANON is OFF"
+  # Cleanup
+  file delete -force $log_file
+  exit 0
+}
+

@@ -1,0 +1,57 @@
+#!/usr/bin/expect -f
+
+# Function to run each test
+proc run_test {desc input expected_pw expected_stars} {
+  puts "\n=== $desc ==="
+  spawn ./pw_input
+
+  expect "Enter your password:"
+
+  # Send the input
+  send -- $input
+
+  # Wait for program to finish and capture full output
+  expect eof
+  set full_output $expect_out(buffer)
+
+  # Extract password from final output line
+  if {[regexp {Password entered: (.*)} $full_output _ pw]} {
+    set pw [string trim $pw]
+  } else {
+    puts "FAIL: Could not extract password from output"
+    puts "Full output:\n$full_output"
+    exit 1
+  }
+
+  # Count asterisk characters
+  set star_count 0
+  foreach char [split $full_output ""] {
+    if {$char == "*"} {
+      incr star_count
+    }
+  }
+
+  puts "\nCaptured password: $pw"
+  puts "Displayed stars: $star_count"
+
+  if { "$pw" == "$expected_pw" && $star_count == $expected_stars } {
+    puts "PASS!"
+  } else {
+    puts "FAIL:"
+    puts "   Expected password: $expected_pw"
+    puts "   Expected stars: $expected_stars"
+    exit 1
+  }
+}
+
+# =============================
+# Run tests
+# =============================
+
+# Test 1: Normal input
+run_test "Test 1: Normal input" "codecafe\r" "codecafe" 8
+
+# Test 2: Backspace input
+# Input: deadbeef <BS><BS><BS> 33 -> final: deadb33
+# '*' shown: 8 (deadbeef) - 3 (backspace removes) + 2 (33) = 10
+run_test "Test 2: Backspace input" "deadbeef\x08\x08\x0833\r" "deadb33" 10
