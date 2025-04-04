@@ -1,10 +1,11 @@
-#include <stdio.h> 
+
+  #include <stdio.h> 
 
 #ifdef _32BIT 
 typedef unsigned int uint32; 
 typedef int int32; 
 typedef unsigned long long uint64; 
-typedef long long int64; 
+typedef londg long int64; 
 #else 
 typedef unsigned int uint32; 
 typedef int int32; 
