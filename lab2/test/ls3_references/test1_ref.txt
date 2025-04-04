@@ -1,0 +1,4 @@
+test_dir1_ls3:
+-rw-r--r--   1 mhan     mhan            0 Mar 20 12:00 test_dir1_ls3/file1_in_dir1.txt
+-rw-------   1 mhan     mhan            0 Mar 20 12:00 test_dir1_ls3/file2_in_dir1.txt
+drwxrwxr-x   2 mhan     mhan         4096 Mar 20 12:00 test_dir1_ls3/sub_dir1

@@ -1,0 +1,53 @@
+#!/usr/bin/expect -f
+
+# Kill any running QEMU processes, ignore errors
+catch { exec pkill -f qemu-system-riscv64 } result
+
+# Start xv6
+spawn make qemu
+
+# Function to exit QEMU and quit if a check fails
+proc fail_and_exit {message} {
+    puts "FAILED: $message"
+    send "\001x"
+    expect eof
+    exit 1
+}
+
+# Wait for shell to be ready
+set timeout 10
+expect {
+    "init: starting sh" {}
+    timeout { fail_and_exit "xv6 shell did not start properly" }
+}
+
+set timeout 2
+
+# Run test_sc
+send "test_sc\r"
+
+# Function to check if expected output appears
+proc check_line {pattern label} {
+    expect {
+        $pattern {}
+        timeout { fail_and_exit "Expected output for $label not found or mismatched" }
+    }
+}
+
+# Perform all checks
+check_line "test_sc: unknown sys call 999" "syscall 999"
+check_line "test_sc: unknown sys call 1000" "syscall 1000"
+check_line "test_sc: unknown sys call 42" "syscall 42"
+check_line "Total syscall count: 10" "total syscall count"
+check_line "Test 1: 6" "Test 1"
+check_line "Test 2: 1" "Test 2"
+check_line "Test 3: 1" "Test 3"
+check_line "Test 4: 1" "Test 4"
+
+# Exit QEMU
+send "\001x"
+expect eof
+
+# All checks passed
+puts ""
+puts "SUCCESS: All tests passed!"

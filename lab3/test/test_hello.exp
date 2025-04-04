@@ -1,0 +1,49 @@
+#!/usr/bin/expect -f
+
+
+# Try to kill any running QEMU processes, ignore errors
+catch { exec pkill -f qemu-system-riscv64 } result
+
+# Start xv6
+spawn make qemu
+
+# Wait for shell prompt
+set timeout 10
+expect {
+    "init: starting sh" {}
+    timeout {
+        puts "❌ Failed to start xv6 shell"
+        exit 1
+    }
+}
+
+set timeout 2
+
+# Run the hello user program
+send "hello\r"
+
+# Check for expected output
+expect {
+    "Hello from xv6 kernel!" {}
+    timeout {
+        puts "FAILED: Missing Hello from xv6 kernel!"
+        exit 1
+    }
+}
+
+expect {
+    "sys_hello() returned 46201" {}
+    timeout {
+        puts "FAILED: Missing sys_hello() returned 46201"
+        exit 1
+    }
+}
+
+# Automatically exit QEMU: Ctrl-A x
+# Ctrl-A is ASCII 1 (\001), then 'x'
+send "\001x"
+
+# Wait for QEMU to shut down
+expect eof
+puts ""
+puts "SUCCESS: All tests passed!"
