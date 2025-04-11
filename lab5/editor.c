@@ -54,6 +54,7 @@ void save(int signum)
    
 
     fclose(f);
+    alarm(5);
 }
 
 void quit(int signum)
