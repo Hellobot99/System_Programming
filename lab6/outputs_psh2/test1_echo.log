@@ -1,0 +1,7 @@
+spawn ./psh2
+Arg[0]? echo
+Arg[1]? hello
+
+Arg[2]? hello
+Child exited with status 0, signal 0
+Arg[0]? 

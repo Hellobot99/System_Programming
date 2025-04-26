@@ -1,0 +1,7 @@
+spawn ./psh3
+Arg[0]? ls
+Arg[1]? ./psh3.c
+
+Arg[2]? ./psh3.c
+Child exited with status 0, signal 0
+Arg[0]? 

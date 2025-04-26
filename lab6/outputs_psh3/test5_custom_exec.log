@@ -1,0 +1,6 @@
+spawn ./psh3
+Arg[0]? ./test/test_exec
+
+Arg[1]? Test Program: I was executed!
+Child exited with status 42, signal 0
+Arg[0]? 

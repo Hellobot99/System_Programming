@@ -1,0 +1,3 @@
+spawn ./psh3
+Arg[0]? exit
+Exiting shell.

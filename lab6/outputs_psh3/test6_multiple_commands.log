@@ -1,0 +1,12 @@
+spawn ./psh3
+Arg[0]? echo
+Arg[1]? first
+Arg[2]? 
+first
+Child exited with status 0, signal 0
+Arg[0]? echo
+Arg[1]? second
+Arg[2]? 
+second
+Child exited with status 0, signal 0
+Arg[0]? 

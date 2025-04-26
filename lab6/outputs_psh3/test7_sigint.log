@@ -1,0 +1,6 @@
+spawn ./psh3
+Arg[0]? sleep
+Arg[1]? 100
+Arg[2]? 
+^CChild exited with status 0, signal 2
+Arg[0]? 
