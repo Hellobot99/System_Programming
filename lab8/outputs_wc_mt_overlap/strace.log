@@ -1,0 +1,7 @@
+strace: Process 14086 attached
+strace: Process 14087 attached
+strace: Process 14088 attached
+[pid 14088] +++ exited with 0 +++
+[pid 14087] +++ exited with 0 +++
+[pid 14086] +++ exited with 0 +++
++++ exited with 0 +++

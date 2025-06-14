@@ -1,0 +1,13 @@
+[background pid 71204]
+[background pid 71206]
+[background pid 71208]
+[background pid 71210]
+[background pid 71212]
+
+[Stopped] pid 71214
+[1] Running  71204 sleep
+[2] Running  71206 sleep
+[3] Running  71208 sleep
+[4] Running  71210 sleep
+[5] Running  71212 sleep
+[6] Stopped  71214 sleep

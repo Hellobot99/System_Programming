@@ -1,0 +1,9 @@
+strace: Process 5575 attached
+strace: Process 5576 attached
+[pid  5575] +++ exited with 0 +++
+strace: Process 5577 attached
+[pid  5576] +++ exited with 0 +++
+strace: Process 5578 attached
+[pid  5577] +++ exited with 0 +++
+[pid  5578] +++ exited with 0 +++
++++ exited with 0 +++

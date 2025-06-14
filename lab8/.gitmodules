@@ -1,0 +1,4 @@
+[submodule "test"]
+	path = test
+	url = https://github.com/KNU-ELEC462/lab8-test.git
+  branch = main
